@@ -1,0 +1,8 @@
+[global]
+DEBUG = True
+LOGFILE = /var/log/mqtt-weatherstation.log
+SERIAL = /dev/ttyUSB0
+BAUD = 57600
+MQTT_HOST = 10.8.0.1
+MQTT_PORT = 1883
+MQTT_SUBTOPIC = /weatherstation/
