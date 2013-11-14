@@ -23,6 +23,8 @@ config.read("/etc/mqtt-weatherstation/mqtt-weatherstation.cfg")
 # Use ConfigParser to pick out the settings
 DEBUG = config.getboolean("global", "debug")
 LOGFILE = config.get("global", "logfile")
+SERIAL = config.get("global", "serial")
+BAUD = config.get("global", "baud")
 MQTT_HOST = config.get("global", "mqtt_host")
 MQTT_PORT = config.getint("global", "mqtt_port")
 MQTT_TOPIC = "/raw/" + socket.getfqdn()
@@ -75,7 +77,7 @@ def open_serial(port,speed):
     Open the serial port
     """
     global ser
-    ser = serial.Serial('/dev/ttyUSB0', 57600)
+    ser = serial.Serial(SERIAL, BAUD)
 
 def on_connect(result_code):
      """
