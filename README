@@ -5,6 +5,8 @@ A small Python deamon that communicates with a Jeenode or Jeelink that's recievi
 
 The weather data is collected by a standard instance of http://www.sevenwatt.com/main/wh1080-protocol-v2-fsk/ and then relayed onto the serial port. This daemon collects the data, splits it up, and relays it onto the MQTT bus using any message topic that you wish to configure.
 
+It's ideally paired with the included weatherstationFSK Arduino sketch courtesy of http://www.sevenwatt.com/main/wh1080-protocol-v2-fsk/ who appears to have released it under the MIT license. Make sure you follow the attached readme too.
+
 INSTALL
 =======
 
