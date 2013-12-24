@@ -27,7 +27,7 @@ SERIAL = config.get("global", "serial")
 BAUD = config.get("global", "baud")
 MQTT_HOST = config.get("global", "mqtt_host")
 MQTT_PORT = config.getint("global", "mqtt_port")
-MQTT_TOPIC = "/raw/" + socket.getfqdn()
+MQTT_TOPIC = "/raw/" + socket.getfqdn() + "/weatherstationFSK/"
 
 client_id = "weatherstation_%d" % os.getpid()
 mqttc = mosquitto.Mosquitto(client_id)
