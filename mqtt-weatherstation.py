@@ -189,6 +189,7 @@ def connect():
 
     mqttc.loop_start()
 
+
 def process_connection():
     """
     What to do when a new connection is established
@@ -224,9 +225,9 @@ def main_loop():
     The main loop in which we stay connected to the broker
     """
     while True:
-    	msg = ser.readline()
-    	items = msg.split(",")
-    	#while True:
+        msg = ser.readline()
+        items = msg.split(",")
+        #while True:
         try:
             logging.debug("0th element is %s", items[0])
             if (items[0] == "[weatherstationFSK]"):
@@ -245,12 +246,18 @@ def main_loop():
                 wind_direction = items[5].split("=")[1].strip()
                 rainfall = items[6].split("=")[1].strip().strip("mm")
 
-                mqttc.publish(MQTT_TOPIC + "temperature/", str(temperature))
-                mqttc.publish(MQTT_TOPIC + "relative_humidity/", str(rel_humidity))
-                mqttc.publish(MQTT_TOPIC + "wind_velocity/", str(wind_velocity))
-                mqttc.publish(MQTT_TOPIC + "wind_maximum/", str(wind_maximum))
-                mqttc.publish(MQTT_TOPIC + "wind_direction/", str(wind_direction))
-                mqttc.publish(MQTT_TOPIC + "rainfall/", str(rainfall))
+                mqttc.publish(MQTT_TOPIC + "temperature/",
+                              str(temperature))
+                mqttc.publish(MQTT_TOPIC + "relative_humidity/",
+                              str(rel_humidity))
+                mqttc.publish(MQTT_TOPIC + "wind_velocity/",
+                              str(wind_velocity))
+                mqttc.publish(MQTT_TOPIC + "wind_maximum/",
+                              str(wind_maximum))
+                mqttc.publish(MQTT_TOPIC + "wind_direction/",
+                              str(wind_direction))
+                mqttc.publish(MQTT_TOPIC + "rainfall/",
+                              str(rainfall))
 
         except IndexError:
             logging.info("Caught a null line. Nothing to worry about")
