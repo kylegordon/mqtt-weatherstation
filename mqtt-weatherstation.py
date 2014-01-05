@@ -222,14 +222,16 @@ def open_serial(port, speed):
 
 def main_loop():
     """
-    The main loop in which we stay connected to the broker
+    The main loop in which we read the serial port
+    and handle the incoming data
     """
     while True:
+        # Read the serial input, and split the CSV list up
         msg = ser.readline()
         items = msg.split(",")
-        #while True:
         try:
             logging.debug("0th element is %s", items[0])
+            # Catch a startup message
             if (items[0] == "[weatherstationFSK]"):
                 logging.info("Arduino reset")
                 mqttc.publish(MQTT_TOPIC + "/status", "Arduino reset")
@@ -237,15 +239,16 @@ def main_loop():
                 logging.debug("Received a list of " +
                               str(len(items)) + " items")
                 logging.debug(items)
-                # Take the incoming split string, get the relevant key/value,
-                # get the value, and strip it of units
+                # Take the incoming split string, get the relevant key/value pair,
+                # take the value, and strip it of units
                 temperature = items[1].split("=")[1].strip().strip("`C")
                 rel_humidity = items[2].split("=")[1].strip().strip("%")
                 wind_velocity = items[3].split("=")[1].strip().strip("m/s")
                 wind_maximum = items[4].split("=")[1].strip().strip("m/s")
                 wind_direction = items[5].split("=")[1].strip()
                 rainfall = items[6].split("=")[1].strip().strip("mm")
-
+                
+                # Publish the resultant values over MQTT
                 mqttc.publish(MQTT_TOPIC + "temperature/",
                               str(temperature))
                 mqttc.publish(MQTT_TOPIC + "relative_humidity/",
