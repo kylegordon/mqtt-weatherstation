@@ -194,7 +194,7 @@ def process_connection():
     """
     What to do when a new connection is established
     """
-    logging.debug("Subscribing to %s", MQTT_TOPIC)
+    logging.debug("Processing connection")
 
 
 def process_message(msg):
