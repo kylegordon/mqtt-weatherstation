@@ -272,4 +272,10 @@ signal.signal(signal.SIGINT, cleanup)
 # Connect to the broker, open the serial port, and enter the main loop
 open_serial("/dev/ttyUSB0", 57600)
 connect()
-main_loop()
+# Try to start the main loop
+try:
+    main_loop()
+except KeyboardInterrupt:
+    logging.info("Interrupted by keypress")
+    sys.exit(0)
+    main_loop()
