@@ -239,7 +239,8 @@ def main_loop():
                 logging.debug("Received a list of " +
                               str(len(items)) + " items")
                 logging.debug(items)
-                # Take the incoming split string, get the relevant key/value pair,
+                # Take the incoming split string,
+                # get the relevant key/value pair,
                 # take the value, and strip it of units
                 temperature = items[1].split("=")[1].strip().strip("`C")
                 rel_humidity = items[2].split("=")[1].strip().strip("%")
@@ -247,7 +248,7 @@ def main_loop():
                 wind_maximum = items[4].split("=")[1].strip().strip("m/s")
                 wind_direction = items[5].split("=")[1].strip()
                 rainfall = items[6].split("=")[1].strip().strip("mm")
-                
+
                 # Publish the resultant values over MQTT
                 mqttc.publish(MQTT_TOPIC + "temperature/",
                               str(temperature))
@@ -270,7 +271,7 @@ signal.signal(signal.SIGTERM, cleanup)
 signal.signal(signal.SIGINT, cleanup)
 
 # Connect to the broker, open the serial port, and enter the main loop
-open_serial("/dev/ttyUSB0", 57600)
+open_serial(SERIAL, BAUD)
 connect()
 # Try to start the main loop
 try:
