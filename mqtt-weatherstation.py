@@ -254,17 +254,17 @@ def main_loop():
                     rainfall = items[6].split("=")[1].strip().strip("mm")
 
                     # Publish the resultant values over MQTT
-                    mqttc.publish(MQTT_TOPIC + "temperature/",
+                    mqttc.publish(MQTT_TOPIC + "temperature",
                                   str(temperature))
-                    mqttc.publish(MQTT_TOPIC + "relative_humidity/",
+                    mqttc.publish(MQTT_TOPIC + "relative_humidity",
                                   str(rel_humidity))
-                    mqttc.publish(MQTT_TOPIC + "wind_velocity/",
+                    mqttc.publish(MQTT_TOPIC + "wind_velocity",
                                   str(wind_velocity))
-                    mqttc.publish(MQTT_TOPIC + "wind_maximum/",
+                    mqttc.publish(MQTT_TOPIC + "wind_maximum",
                                   str(wind_maximum))
-                    mqttc.publish(MQTT_TOPIC + "wind_direction/",
+                    mqttc.publish(MQTT_TOPIC + "wind_direction",
                                   str(wind_direction))
-                    mqttc.publish(MQTT_TOPIC + "rainfall/",
+                    mqttc.publish(MQTT_TOPIC + "rainfall",
                                   str(rainfall))
 
         except IndexError:
