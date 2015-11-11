@@ -6,3 +6,5 @@ BAUD = 57600
 MQTT_HOST = 10.8.0.1
 MQTT_PORT = 1883
 MQTT_SUBTOPIC = /weatherstation/
+# This is the ID of the weatherstation
+ID = C9

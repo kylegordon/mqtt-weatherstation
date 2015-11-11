@@ -28,6 +28,7 @@ BAUD = config.get("global", "baud")
 MQTT_HOST = config.get("global", "mqtt_host")
 MQTT_PORT = config.getint("global", "mqtt_port")
 MQTT_TOPIC = "/raw/" + socket.getfqdn() + "/weatherstationFSK/"
+ID = config.get("global", "id")
 
 APPNAME = "mqtt-weatherstation"
 PRESENCETOPIC = "clients/" + socket.getfqdn() + "/" + APPNAME + "/state"
@@ -239,29 +240,32 @@ def main_loop():
                 logging.debug("Received a list of " +
                               str(len(items)) + " items")
                 logging.debug(items)
-                # Take the incoming split string,
-                # get the relevant key/value pair,
-                # take the value, and strip it of units
-                temperature = items[1].split("=")[1].strip().strip("`C")
-                rel_humidity = items[2].split("=")[1].strip().strip("%")
-                wind_velocity = items[3].split("=")[1].strip().strip("m/s")
-                wind_maximum = items[4].split("=")[1].strip().strip("m/s")
-                wind_direction = items[5].split("=")[1].strip()
-                rainfall = items[6].split("=")[1].strip().strip("mm")
+                recieved_id=items[0].split(": ")
+                if recieved_id == ID:
+                    logging.debug("Recieved an ID that matches")
+                    # Take the incoming split string,
+                    # get the relevant key/value pair,
+                    # take the value, and strip it of units
+                    temperature = items[1].split("=")[1].strip().strip("`C")
+                    rel_humidity = items[2].split("=")[1].strip().strip("%")
+                    wind_velocity = items[3].split("=")[1].strip().strip("m/s")
+                    wind_maximum = items[4].split("=")[1].strip().strip("m/s")
+                    wind_direction = items[5].split("=")[1].strip()
+                    rainfall = items[6].split("=")[1].strip().strip("mm")
 
-                # Publish the resultant values over MQTT
-                mqttc.publish(MQTT_TOPIC + "temperature/",
-                              str(temperature))
-                mqttc.publish(MQTT_TOPIC + "relative_humidity/",
-                              str(rel_humidity))
-                mqttc.publish(MQTT_TOPIC + "wind_velocity/",
-                              str(wind_velocity))
-                mqttc.publish(MQTT_TOPIC + "wind_maximum/",
-                              str(wind_maximum))
-                mqttc.publish(MQTT_TOPIC + "wind_direction/",
-                              str(wind_direction))
-                mqttc.publish(MQTT_TOPIC + "rainfall/",
-                              str(rainfall))
+                    # Publish the resultant values over MQTT
+                    mqttc.publish(MQTT_TOPIC + "temperature/",
+                                  str(temperature))
+                    mqttc.publish(MQTT_TOPIC + "relative_humidity/",
+                                  str(rel_humidity))
+                    mqttc.publish(MQTT_TOPIC + "wind_velocity/",
+                                  str(wind_velocity))
+                    mqttc.publish(MQTT_TOPIC + "wind_maximum/",
+                                  str(wind_maximum))
+                    mqttc.publish(MQTT_TOPIC + "wind_direction/",
+                                  str(wind_direction))
+                    mqttc.publish(MQTT_TOPIC + "rainfall/",
+                                  str(rainfall))
 
         except IndexError:
             logging.info("Caught a null line. Nothing to worry about")
