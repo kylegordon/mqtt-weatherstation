@@ -240,7 +240,6 @@ def main_loop():
                 logging.debug("Received a list of " +
                               str(len(items)) + " items")
                 logging.debug(items)
-                                logging.debug(items)
                 recieved_id=items[0].split(": ")[1]
                 if recieved_id == ID:
                     logging.debug("Recieved an ID that matches")
